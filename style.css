@@ -7,6 +7,11 @@ p {
   margin: 0px;
 }
 
+input {
+  all: unset;
+  flex-grow: 1;
+}
+
 body {
   font-family: "Lato";
   max-width: 1240px;
@@ -22,9 +27,17 @@ header#header img {
   margin-bottom: 17px;
 }
 
+#search,
+#searchbar {
+  margin-bottom: 25px;
+}
+
+img[alt="rechercher"] {
+  float: right;
+}
+
 #search {
   width: 100%;
-  margin-bottom: 25px;
 }
 
 #search-filters {
@@ -32,14 +45,20 @@ header#header img {
   gap: 20px;
 }
 
-input {
-  background-color: #e7e7e7;
+#searchbar,
+.chip,
+.card-info,
+article,
+#search-filters > div {
   border-radius: 5px;
-  margin-bottom: 25px;
-  padding: 23px 17px 24px 24px;
+}
+
+#searchbar {
+  background-color: #e7e7e7;
+  padding: 18px 17px 19px 24px;
   font-size: 18px;
-  width: 100%;
   border: 0px;
+  display: flex;
 }
 
 #selected-filters {
@@ -48,21 +67,28 @@ input {
 
 .chip {
   background-color: #3282f7;
-  border-radius: 5px;
   color: #fff;
   width: fit-content;
   padding: 10px 20px;
+  display: flex;
+  gap: 13px;
 }
 
-select {
+#search-filters > div {
   color: #fff;
-  border: none;
-  border-radius: 5px;
   font-size: 18px;
   font-weight: bold;
   font-family: "Lato";
-  text-align: center;
   padding: 15px 23px;
+  width: fit-content;
+  display: flex;
+}
+
+#search-filters input {
+  width: 100px;
+}
+#search-filters input::placeholder {
+  opacity: 1;
 }
 
 #search-ingredients {
@@ -86,7 +112,11 @@ select {
 article {
   flex: 1;
   min-width: 380px;
-  border-radius: 5px;
+}
+
+article,
+img {
+  cursor: pointer;
 }
 
 .card-info {

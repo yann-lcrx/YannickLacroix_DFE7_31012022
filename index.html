@@ -5,27 +5,71 @@
     <link rel="stylesheet" href="style.css" />
     <meta name="description" content="" />
     <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header id="header">
-      <img src="assets/logo.png" alt="Les petits plats" />
+      <a href="index.html"
+        ><img src="assets/logo.png" alt="Les petits plats"
+      /></a>
     </header>
     <main>
       <div id="search">
-        <input type="text" placeholder="Rechercher une recette" />
+        <div id="searchbar">
+          <input
+            type="search"
+            name="search"
+            placeholder="Rechercher une recette"
+          />
+          <img src="/assets/svg/search_black.svg" alt="rechercher" />
+        </div>
+
         <div id="selected-filters">
-          <div class="chip"><p>Coco</p></div>
+          <div class="chip">
+            <p>Coco</p>
+            <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" />
+          </div>
         </div>
         <div id="search-filters">
-          <select name="ingredients" id="search-ingredients">
-            <option value="ingredients" selected>Ingrédients</option>
-          </select>
-          <select name="devices" id="search-devices">
-            <option value="devices" selected>Appareils</option>
-          </select>
-          <select name="utensils" id="search-utensils">
-            <option value="utensils" selected>Ustensils</option>
-          </select>
+          <div id="search-ingredients">
+            <input
+              type="search"
+              name="ingredients"
+              id="search-ingredients-filter"
+              placeholder="Ingrédients"
+            />
+            <img
+              src="/assets/svg/expand_more_white.svg"
+              alt="afficher les filtres"
+            />
+          </div>
+          <div id="search-devices">
+            <input
+              type="search"
+              name="devices"
+              id="search-devices-filter"
+              placeholder="Appareils"
+            />
+            <img
+              src="/assets/svg/expand_more_white.svg"
+              alt="afficher les filtres"
+            />
+          </div>
+          <div id="search-utensils">
+            <input
+              type="search"
+              name="utensils"
+              id="search-utensils-filter"
+              placeholder="Ustensils"
+            />
+            <img
+              src="/assets/svg/expand_more_white.svg"
+              alt="afficher les filtres"
+            />
+          </div>
         </div>
       </div>
 
