@@ -1,0 +1,139 @@
+@font-face {
+  font-family: "Lato";
+  src: url("/assets/Lato2OFL/Lato-Regular.ttf");
+}
+
+p {
+  margin: 0px;
+}
+
+body {
+  font-family: "Lato";
+  max-width: 1240px;
+  margin: auto;
+}
+
+header#header {
+  text-align: center;
+}
+
+header#header img {
+  width: 268px;
+  margin-bottom: 17px;
+}
+
+#search {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+#search-filters {
+  display: flex;
+  gap: 20px;
+}
+
+input {
+  background-color: #e7e7e7;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  padding: 23px 17px 24px 24px;
+  font-size: 18px;
+  width: 100%;
+  border: 0px;
+}
+
+#selected-filters {
+  margin-bottom: 15px;
+}
+
+.chip {
+  background-color: #3282f7;
+  border-radius: 5px;
+  color: #fff;
+  width: fit-content;
+  padding: 10px 20px;
+}
+
+select {
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: "Lato";
+  text-align: center;
+  padding: 15px 23px;
+}
+
+#search-ingredients {
+  background-color: #3282f7;
+}
+
+#search-devices {
+  background-color: #68d9a4;
+}
+
+#search-utensils {
+  background-color: #ed6454;
+}
+
+#results {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 50px;
+}
+
+article {
+  flex: 1;
+  min-width: 380px;
+  border-radius: 5px;
+}
+
+.card-info {
+  padding: 19px 20px;
+  gap: 20px;
+  background-color: #e7e7e7;
+}
+
+ul {
+  padding: 0px;
+  font-size: 12px;
+  font-weight: bold;
+  flex: 1;
+}
+
+li {
+  list-style-type: none;
+}
+
+article header {
+  font-size: 18px;
+}
+
+.placeholder-img {
+  border-radius: 5px 5px 0px 0px;
+  width: 100%;
+  min-width: 380px;
+  min-height: 178px;
+  background-color: #c7bebe;
+}
+
+.duration-text {
+  font-weight: bold;
+}
+
+.card-body,
+article header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-body > p {
+  flex: 1;
+}
+
+article,
+.card-info {
+  display: flex;
+  flex-flow: column nowrap;
+}
