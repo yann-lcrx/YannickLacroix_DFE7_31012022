@@ -5,13 +5,14 @@ document.querySelector("#search input").addEventListener("input", (event) => {
 });
 
 function getSearchResults(string) {
+  const pattern = new RegExp(string, "i");
   return [...recipes].filter((recipe) => {
     return (
-      recipe.name.includes(string) ||
-      recipe.description.includes(string) ||
+      recipe.name.match(pattern) ||
+      recipe.description.match(pattern) ||
       recipe.ingredients
         .map((ingredient) => Object.values(ingredient.ingredient))
-        .includes(string)
+        .some((ingredient) => pattern.test(ingredient))
     );
   });
 }
