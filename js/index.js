@@ -4,24 +4,55 @@ document.querySelector("#search input").addEventListener("input", (event) => {
   }
 });
 
+//includes, indexOf
 function getSearchResults(string) {
-  const pattern = new RegExp(string, "i");
+  const lowerCaseString = string.toLowerCase();
+  const formattedString = lowerCaseString
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "");
   return [...recipes].filter((recipe) => {
     return (
-      recipe.name.match(pattern) ||
-      recipe.description.match(pattern) ||
+      recipe.name
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .includes(formattedString) ||
+      recipe.description
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .includes(formattedString) ||
       recipe.ingredients
-        .map((ingredient) => Object.values(ingredient.ingredient))
-        .some((ingredient) => pattern.test(ingredient))
+        .map((ingredient) =>
+          Object.values(
+            ingredient.ingredient
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/\p{Diacritic}/gu, "")
+          )
+        )
+        .includes(formattedString)
     );
   });
 }
 
+/* 
+let string = "Hello World";
+
+let search = "Hello";
+
+console.log(string.toLowerCase().includes(search.toLowerCase()))
+
+let stringWithAccents = "Phénomène"
+
+console.log(stringWithAccents.normalize("NFD").replace(/\p{Diacritic}/gu,""))
+*/
+
 function displayResults(results) {
   document.getElementById("results").innerHTML = "";
-  let index = 0;
+  let resultsDOM = "";
   for (let result of results) {
-    document.getElementById("results").innerHTML += `
+    resultsDOM += `
       <article class="card">
         <div class="placeholder-img"></div>
         <div class="card-info">
@@ -30,7 +61,19 @@ function displayResults(results) {
             <p class="duration-text">${result.time} min</p>
           </header>
           <div class="card-body">
-            <ul></ul>
+            <ul>
+              ${result.ingredients
+                .map(
+                  (ingredient) => `
+              <li><span class="ingredient">${ingredient.ingredient}${
+                    ingredient.quantity
+                      ? ": </span>" + ingredient.quantity
+                      : "</span>"
+                  } ${ingredient.unit ? ingredient.unit : ""}</li>
+            `
+                )
+                .join("")}
+            </ul>
             <p>
               ${result.description}
             </p>
@@ -38,13 +81,12 @@ function displayResults(results) {
         </div>
       </article>
     `;
-    for (let ingredient of result.ingredients) {
-      document.querySelectorAll(".card-body ul")[index].innerHTML += `
-        <li>${ingredient.ingredient}${
-        ingredient.quantity ? ": " + ingredient.quantity : ""
-      } ${ingredient.unit ? ingredient.unit : ""}</li>
-      `;
-    }
-    index++;
   }
+  document
+    .getElementById("results")
+    .insertAdjacentHTML("afterbegin", resultsDOM);
 }
+
+//classe pour gérer la recherche, qui enregistre la liste de base et celle triée. Qui gère les données et le filtre de la recherche principale
+//autre classe pour les filtres par tag
+//JSdoc pour POO
