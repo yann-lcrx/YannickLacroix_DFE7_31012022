@@ -1,3 +1,5 @@
+import DataManager from "./DataManager.js";
+
 async function init() {
   await DataManager.loadJson("../data/recipes.json");
   document.querySelector("#search input").addEventListener("input", (event) => {

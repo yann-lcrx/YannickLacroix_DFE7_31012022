@@ -1,7 +1,9 @@
+import String from "./utils.js";
+
 /**
  * Fetches and serves data
  */
-class DataManager {
+export default class DataManager {
   static data = null;
 
   static async loadJson(file) {
@@ -28,14 +30,14 @@ class DataManager {
   }
 
   static getSearchResults(query) {
-    const formattedString = this.getFormattedString(query);
+    const formattedString = query.getFormattedString();
     return [...this.getRecipes()].filter((recipe) => {
       return (
-        this.getFormattedString(recipe.name).includes(formattedString) ||
-        this.getFormattedString(recipe.description).includes(formattedString) ||
+        recipe.name.getFormattedString().includes(formattedString) ||
+        recipe.description.getFormattedString().includes(formattedString) ||
         recipe.ingredients
           .map((ingredient) =>
-            Object.values(this.getFormattedString(ingredient.ingredient))
+            Object.values(ingredient.ingredient.getFormattedString())
           )
           .includes(formattedString)
       );
