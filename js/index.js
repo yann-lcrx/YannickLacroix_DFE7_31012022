@@ -7,6 +7,36 @@ async function init() {
       displayResults(DataManager.getSearchResults(event.target.value));
     }
   });
+  document
+    .getElementById("search-ingredients")
+    .addEventListener("click", function () {
+      if (this.classList.contains("selected")) {
+        this.classList.remove("selected");
+        this.childNodes[3].setAttribute(
+          "src",
+          "../assets/svg/expand_more_white.svg"
+        );
+      } else {
+        this.classList.add("selected");
+        this.childNodes[3].setAttribute(
+          "src",
+          "../assets/svg/expand_less_white.svg"
+        );
+      }
+    });
+  for (let listItem of document.querySelectorAll("#list-ingredients li")) {
+    listItem.addEventListener("click", function () {
+      if (!this.classList.contains("selected")) {
+        document
+          .getElementById("selected-filters")
+          .insertAdjacentHTML(
+            "beforeend",
+            `<div class="chip">${this.innerText} <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" /></div>`
+          );
+        this.classList.add("selected");
+      }
+    });
+  }
 }
 
 function displayResults(results) {
