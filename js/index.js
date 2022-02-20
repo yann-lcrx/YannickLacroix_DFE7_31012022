@@ -7,9 +7,8 @@ async function init() {
       displayResults(DataManager.getSearchResults(event.target.value));
     }
   });
-  document
-    .getElementById("search-ingredients")
-    .addEventListener("click", function () {
+  for (let filterSelector of document.querySelectorAll('[role="combobox"]')) {
+    filterSelector.addEventListener("click", function () {
       if (this.classList.contains("selected")) {
         this.classList.remove("selected");
         this.childNodes[3].setAttribute(
@@ -24,16 +23,27 @@ async function init() {
         );
       }
     });
-  for (let listItem of document.querySelectorAll("#list-ingredients li")) {
+  }
+
+  for (let listItem of document.querySelectorAll('[role="listbox"] li')) {
     listItem.addEventListener("click", function () {
       if (!this.classList.contains("selected")) {
         document
           .getElementById("selected-filters")
           .insertAdjacentHTML(
             "beforeend",
-            `<div class="chip">${this.innerText} <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" /></div>`
+            `<div class="chip chip-${this.innerText} chip-${this.parentElement.parentElement.id}">${this.innerText} <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" /></div>`
           );
+        document
+          .querySelector(`.chip-${this.innerText} img`)
+          .addEventListener("click", () => {
+            document.querySelector(`.chip-${this.innerText}`).remove();
+            this.classList.remove("selected");
+          });
         this.classList.add("selected");
+      } else {
+        document.querySelector(`.chip-${this.innerText}`).remove();
+        this.classList.remove("selected");
       }
     });
   }

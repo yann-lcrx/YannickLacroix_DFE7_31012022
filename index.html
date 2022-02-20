@@ -28,14 +28,9 @@
           <img src="/assets/svg/search_black.svg" alt="rechercher" />
         </div>
 
-        <div id="selected-filters">
-          <div class="chip">
-            <p>Coco</p>
-            <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" />
-          </div>
-        </div>
+        <div id="selected-filters"></div>
         <div id="search-filters">
-          <div id="ingredients-section">
+          <div id="ingredients-section" class="search-filter">
             <div id="search-ingredients" role="combobox">
               <input
                 type="search"
@@ -48,50 +43,55 @@
                 alt="afficher les filtres"
               />
             </div>
-            <div role="listbox" id="list-ingredients">
+            <div role="listbox" id="ingredients">
               <ul>
                 <li>Coco</li>
                 <li>Gingembre</li>
                 <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
-                <li>Poulet</li>
               </ul>
             </div>
           </div>
-          <div id="search-devices">
-            <input
-              type="search"
-              name="devices"
-              id="search-devices-filter"
-              placeholder="Appareils"
-            />
-            <img
-              src="/assets/svg/expand_more_white.svg"
-              alt="afficher les filtres"
-            />
+          <div id="appliances-section" class="search-filter">
+            <div id="search-appliances" role="combobox">
+              <input
+                type="search"
+                name="appliances"
+                id="search-appliances-filter"
+                placeholder="Appareils"
+              />
+              <img
+                src="/assets/svg/expand_more_white.svg"
+                alt="afficher les filtres"
+              />
+            </div>
+            <div role="listbox" id="appliances">
+              <ul>
+                <li>Four</li>
+                <li>Mixeur</li>
+                <li>Micro-ondes</li>
+              </ul>
+            </div>
           </div>
-          <div id="search-utensils">
-            <input
-              type="search"
-              name="utensils"
-              id="search-utensils-filter"
-              placeholder="Ustensils"
-            />
-            <img
-              src="/assets/svg/expand_more_white.svg"
-              alt="afficher les filtres"
-            />
+          <div id="utensils-section" class="search-filter">
+            <div id="search-utensils" role="combobox">
+              <input
+                type="search"
+                name="utensils"
+                id="search-utensils-filter"
+                placeholder="Ustensils"
+              />
+              <img
+                src="/assets/svg/expand_more_white.svg"
+                alt="afficher les filtres"
+              />
+            </div>
+            <div role="listbox" id="utensils">
+              <ul>
+                <li>Cuiller</li>
+                <li>Casserole</li>
+                <li>Poêle</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

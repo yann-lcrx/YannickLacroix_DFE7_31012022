@@ -15,6 +15,7 @@ input {
 body {
   font-family: "Lato";
   max-width: 1240px;
+  width: calc(100% - 60px);
   margin: auto;
 }
 
@@ -85,7 +86,6 @@ article,
 div[role="combobox"] {
   font-weight: bold;
   font-family: "Lato";
-  width: fit-content;
   display: flex;
   width: 100%;
 }
@@ -93,6 +93,7 @@ div[role="combobox"] {
 div[role="combobox"] + div[role="listbox"] {
   display: none;
   padding-top: 12px;
+  margin-right: -76px;
 }
 
 div[role="combobox"][class="selected"] + div[role="listbox"] {
@@ -101,10 +102,6 @@ div[role="combobox"][class="selected"] + div[role="listbox"] {
 
 #search-filters {
   font-size: 18px;
-}
-
-#list-ingredients {
-  margin-right: -76px;
 }
 
 #search-filters ul {
@@ -133,17 +130,24 @@ div[role="combobox"][class="selected"] + div[role="listbox"] {
   opacity: 1;
 }
 
-#ingredients-section {
+.search-filter {
   color: #fff;
-  background-color: #3282f7;
   padding: 16px 20px;
+  height: fit-content;
 }
 
-#search-devices {
+#ingredients-section,
+.chip-ingredients {
+  background-color: #3282f7;
+}
+
+#appliances-section,
+.chip-appliances {
   background-color: #68d9a4;
 }
 
-#search-utensils {
+#utensils-section,
+.chip-utensils {
   background-color: #ed6454;
 }
 
