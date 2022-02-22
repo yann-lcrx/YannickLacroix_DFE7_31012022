@@ -22,6 +22,38 @@ export default class DataManager {
     return this.data.recipes;
   }
 
+  static getIngredients() {
+    const ingredientList = [];
+    for (let recipe of this.data.recipes) {
+      for (let ingredient of recipe.ingredients)
+        if (!ingredientList.includes(ingredient.ingredient)) {
+          ingredientList.push(ingredient.ingredient);
+        }
+    }
+    return ingredientList;
+  }
+
+  static getAppliances() {
+    const applianceList = [];
+    for (let recipe of this.data.recipes) {
+      if (!applianceList.includes(recipe.appliance)) {
+        applianceList.push(recipe.appliance);
+      }
+    }
+    return applianceList;
+  }
+
+  static getUtensils() {
+    const utensilList = [];
+    for (let recipe of this.data.recipes) {
+      for (let utensil of recipe.ustensils)
+        if (!utensilList.includes(utensil)) {
+          utensilList.push(utensil);
+        }
+    }
+    return utensilList;
+  }
+
   static getFormattedString(string) {
     return string
       .toLowerCase()

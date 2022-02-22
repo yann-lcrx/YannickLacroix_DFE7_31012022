@@ -2,11 +2,18 @@ import DataManager from "./DataManager.js";
 
 async function init() {
   await DataManager.loadJson("../data/recipes.json");
+  displayResults(DataManager.getRecipes());
   document.querySelector("#search input").addEventListener("input", (event) => {
     if (event.target.value.length > 2) {
       displayResults(DataManager.getSearchResults(event.target.value));
+    } else {
+      displayResults(DataManager.getRecipes());
     }
   });
+  displayIngredientsList();
+  displayAppliancesList();
+  displayUtensilsList();
+
   for (let filterSelector of document.querySelectorAll('[role="combobox"]')) {
     filterSelector.addEventListener("click", function () {
       if (this.classList.contains("selected")) {
@@ -47,6 +54,7 @@ async function init() {
       }
     });
   }
+  console.log(DataManager.getUtensils());
 }
 
 function displayResults(results) {
@@ -86,6 +94,36 @@ function displayResults(results) {
   document
     .getElementById("results")
     .insertAdjacentHTML("afterbegin", resultsDOM);
+}
+
+function displayIngredientsList() {
+  let ingredientsDOM = "";
+  for (let ingredient of DataManager.getIngredients()) {
+    ingredientsDOM += `<li>${ingredient}</li>`;
+  }
+  document
+    .querySelector("#ingredients ul")
+    .insertAdjacentHTML("afterbegin", ingredientsDOM);
+}
+
+function displayAppliancesList() {
+  let appliancesDOM = "";
+  for (let appliance of DataManager.getAppliances()) {
+    appliancesDOM += `<li>${appliance}</li>`;
+  }
+  document
+    .querySelector("#appliances ul")
+    .insertAdjacentHTML("afterbegin", appliancesDOM);
+}
+
+function displayUtensilsList() {
+  let utensilsDOM = "";
+  for (let utensil of DataManager.getUtensils()) {
+    utensilsDOM += `<li>${utensil}</li>`;
+  }
+  document
+    .querySelector("#utensils ul")
+    .insertAdjacentHTML("afterbegin", utensilsDOM);
 }
 
 init();

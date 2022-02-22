@@ -13,9 +13,10 @@ input {
 }
 
 body {
+  padding: 32px 0;
   font-family: "Lato";
   max-width: 1240px;
-  width: calc(100% - 60px);
+  width: calc(100% - 64px);
   margin: auto;
 }
 
