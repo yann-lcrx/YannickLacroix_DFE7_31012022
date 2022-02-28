@@ -54,22 +54,17 @@ export default class DataManager {
     return utensilList;
   }
 
-  static getFormattedString(string) {
-    return string
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/\p{Diacritic}/gu, "");
-  }
-
   static getSearchResults(query) {
-    const formattedString = query.getFormattedString();
+    const formattedString = query.getFormattedSearchQuery();
     return [...this.getRecipes()].filter((recipe) => {
       return (
-        recipe.name.getFormattedString().includes(formattedString) ||
-        recipe.description.getFormattedString().includes(formattedString) ||
+        recipe.name.getFormattedSearchQuery().includes(formattedString) ||
+        recipe.description
+          .getFormattedSearchQuery()
+          .includes(formattedString) ||
         recipe.ingredients
           .map((ingredient) =>
-            Object.values(ingredient.ingredient.getFormattedString())
+            Object.values(ingredient.ingredient.getFormattedSearchQuery())
           )
           .includes(formattedString)
       );

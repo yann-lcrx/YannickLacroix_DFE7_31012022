@@ -1,4 +1,5 @@
 import DataManager from "./DataManager.js";
+import String from "./utils.js";
 
 async function init() {
   await DataManager.loadJson("../data/recipes.json");
@@ -39,22 +40,29 @@ async function init() {
           .getElementById("selected-filters")
           .insertAdjacentHTML(
             "beforeend",
-            `<div class="chip chip-${this.innerText} chip-${this.parentElement.parentElement.id}">${this.innerText} <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" /></div>`
+            `<div class="chip chip-${this.innerText.getFormattedClassName()} chip-${
+              this.parentElement.parentElement.id
+            }">${
+              this.innerText
+            } <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" /></div>`
           );
         document
-          .querySelector(`.chip-${this.innerText} img`)
+          .querySelector(`.chip-${this.innerText.getFormattedClassName()} img`)
           .addEventListener("click", () => {
-            document.querySelector(`.chip-${this.innerText}`).remove();
+            document
+              .querySelector(`.chip-${this.innerText.getFormattedClassName()}`)
+              .remove();
             this.classList.remove("selected");
           });
         this.classList.add("selected");
       } else {
-        document.querySelector(`.chip-${this.innerText}`).remove();
+        document
+          .querySelector(`.chip-${this.innerText.getFormattedClassName()}`)
+          .remove();
         this.classList.remove("selected");
       }
     });
   }
-  console.log(DataManager.getUtensils());
 }
 
 function displayResults(results) {
@@ -129,3 +137,4 @@ function displayUtensilsList() {
 init();
 
 //autre classe pour les filtres par tag
+//les filtres doivent être ceux des résultats de la recherche principale (ingrédients, ustensils...)
