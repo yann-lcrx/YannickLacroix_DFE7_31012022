@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Les petits plats</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="description" content="" />
+    <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header id="header">
+      <a href="index.html"
+        ><img src="assets/logo.png" alt="Les petits plats"
+      /></a>
+    </header>
+    <main>
+      <div id="search">
+        <div id="searchbar">
+          <input
+            type="search"
+            name="search"
+            placeholder="Rechercher une recette"
+            aria-label="Rechercher une recette"
+          />
+          <img src="/assets/svg/search_black.svg" alt="rechercher" />
+        </div>
+
+        <div id="selected-filters"></div>
+        <div id="search-filters">
+          <div id="ingredients-section" class="search-filter">
+            <div id="search-ingredients" role="combobox">
+              <input
+                type="search"
+                name="ingredients"
+                id="search-ingredients-filter"
+                placeholder="Ingrédients"
+              />
+              <img
+                src="/assets/svg/expand_more_white.svg"
+                alt="afficher les filtres"
+              />
+            </div>
+            <div role="listbox" id="ingredients">
+              <ul></ul>
+            </div>
+          </div>
+          <div id="appliances-section" class="search-filter">
+            <div id="search-appliances" role="combobox">
+              <input
+                type="search"
+                name="appliances"
+                id="search-appliances-filter"
+                placeholder="Appareils"
+              />
+              <img
+                src="/assets/svg/expand_more_white.svg"
+                alt="afficher les filtres"
+              />
+            </div>
+            <div role="listbox" id="appliances">
+              <ul></ul>
+            </div>
+          </div>
+          <div id="utensils-section" class="search-filter">
+            <div id="search-utensils" role="combobox">
+              <input
+                type="search"
+                name="utensils"
+                id="search-utensils-filter"
+                placeholder="Ustensils"
+              />
+              <img
+                src="/assets/svg/expand_more_white.svg"
+                alt="afficher les filtres"
+              />
+            </div>
+            <div role="listbox" id="utensils">
+              <ul></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="results"></div>
+    </main>
+    <script src="js/index.js" type="module"></script>
+  </body>
+</html>
