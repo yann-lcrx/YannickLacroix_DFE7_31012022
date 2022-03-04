@@ -4,7 +4,7 @@ String.prototype.getFormattedSearchQuery = function () {
     .replace(/\p{Diacritic}/gu, "");
 };
 
-String.prototype.getFormattedClassName = function () {
+String.prototype.getFormattedDataId = function () {
   return this.toLowerCase()
     .replaceAll(" ", "-")
     .replaceAll("%", "")

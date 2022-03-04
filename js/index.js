@@ -35,31 +35,37 @@ async function init() {
 
   for (let listItem of document.querySelectorAll('[role="listbox"] li')) {
     listItem.addEventListener("click", function () {
-      if (!this.classList.contains("selected")) {
+      if (this.getAttribute("selected") !== "true") {
         document
           .getElementById("selected-filters")
           .insertAdjacentHTML(
             "beforeend",
-            `<div class="chip chip-${this.innerText.getFormattedClassName()} chip-${
+            `<div class="chip chip-${
               this.parentElement.parentElement.id
-            }">${
+            }" data-id=${this.innerText.getFormattedDataId()}>${
               this.innerText
             } <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" /></div>`
           );
         document
-          .querySelector(`.chip-${this.innerText.getFormattedClassName()} img`)
+          .querySelector(
+            `.chip[data-id=${this.innerText.getFormattedDataId()}] img`
+          )
           .addEventListener("click", () => {
             document
-              .querySelector(`.chip-${this.innerText.getFormattedClassName()}`)
+              .querySelector(
+                `.chip[data-id=${this.innerText.getFormattedDataId()}]`
+              )
               .remove();
-            this.classList.remove("selected");
+            this.setAttribute("selected", "true");
           });
-        this.classList.add("selected");
+        this.setAttribute("selected", "true");
       } else {
         document
-          .querySelector(`.chip-${this.innerText.getFormattedClassName()}`)
+          .querySelector(
+            `.chip[data-id=${this.innerText.getFormattedDataId()}]`
+          )
           .remove();
-        this.classList.remove("selected");
+        this.setAttribute("selected", "false");
       }
     });
   }
@@ -138,3 +144,5 @@ init();
 
 //autre classe pour les filtres par tag
 //les filtres doivent être ceux des résultats de la recherche principale (ingrédients, ustensils...)
+//dataset plutôt que classe pour les tags
+// I/O et affichage de l'algorigramme
