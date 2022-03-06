@@ -22,9 +22,9 @@ export default class DataManager {
     return this.data.recipes;
   }
 
-  static getIngredients() {
+  static getIngredients(query) {
     const ingredientList = [];
-    for (let recipe of this.data.recipes) {
+    for (let recipe of this.getSearchResults(query)) {
       for (let ingredient of recipe.ingredients)
         if (!ingredientList.includes(ingredient.ingredient)) {
           ingredientList.push(ingredient.ingredient);
@@ -33,9 +33,9 @@ export default class DataManager {
     return ingredientList;
   }
 
-  static getAppliances() {
+  static getAppliances(query) {
     const applianceList = [];
-    for (let recipe of this.data.recipes) {
+    for (let recipe of this.getSearchResults(query)) {
       if (!applianceList.includes(recipe.appliance)) {
         applianceList.push(recipe.appliance);
       }
@@ -43,9 +43,9 @@ export default class DataManager {
     return applianceList;
   }
 
-  static getUtensils() {
+  static getUtensils(query) {
     const utensilList = [];
-    for (let recipe of this.data.recipes) {
+    for (let recipe of this.getSearchResults(query)) {
       for (let utensil of recipe.ustensils)
         if (!utensilList.includes(utensil)) {
           utensilList.push(utensil);
@@ -55,19 +55,21 @@ export default class DataManager {
   }
 
   static getSearchResults(query) {
-    const formattedString = query.getFormattedSearchQuery();
-    return [...this.getRecipes()].filter((recipe) => {
-      return (
-        recipe.name.getFormattedSearchQuery().includes(formattedString) ||
-        recipe.description
-          .getFormattedSearchQuery()
-          .includes(formattedString) ||
-        recipe.ingredients
-          .map((ingredient) =>
-            Object.values(ingredient.ingredient.getFormattedSearchQuery())
-          )
-          .includes(formattedString)
-      );
-    });
+    if (query.length > 2) {
+      const formattedString = query.getFormattedSearchQuery();
+      return [...this.getRecipes()].filter((recipe) => {
+        return (
+          recipe.name.getFormattedSearchQuery().includes(formattedString) ||
+          recipe.description
+            .getFormattedSearchQuery()
+            .includes(formattedString) ||
+          recipe.ingredients
+            .map((ingredient) =>
+              Object.values(ingredient.ingredient.getFormattedSearchQuery())
+            )
+            .includes(formattedString)
+        );
+      });
+    } else return this.getRecipes();
   }
 }

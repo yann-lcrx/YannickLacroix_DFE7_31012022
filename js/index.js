@@ -5,15 +5,10 @@ async function init() {
   await DataManager.loadJson("../data/recipes.json");
   displayResults(DataManager.getRecipes());
   document.querySelector("#search input").addEventListener("input", (event) => {
-    if (event.target.value.length > 2) {
-      displayResults(DataManager.getSearchResults(event.target.value));
-    } else {
-      displayResults(DataManager.getRecipes());
-    }
+    displayResults(DataManager.getSearchResults(event.target.value));
+    displayListItems(event.target.value);
   });
-  displayIngredientsList();
-  displayAppliancesList();
-  displayUtensilsList();
+  displayListItems("");
 
   for (let filterSelector of document.querySelectorAll('[role="combobox"]')) {
     filterSelector.addEventListener("click", function () {
@@ -32,7 +27,17 @@ async function init() {
       }
     });
   }
+}
 
+function displayListItems(query) {
+  displayIngredientsList(query);
+  displayAppliancesList(query);
+  displayUtensilsList(query);
+  setupListItemEvents();
+  document.getElementById("selected-filters").innerHTML = "";
+}
+
+function setupListItemEvents() {
   for (let listItem of document.querySelectorAll('[role="listbox"] li')) {
     listItem.addEventListener("click", function () {
       if (this.getAttribute("selected") !== "true") {
@@ -56,7 +61,7 @@ async function init() {
                 `.chip[data-id=${this.innerText.getFormattedDataId()}]`
               )
               .remove();
-            this.setAttribute("selected", "true");
+            this.setAttribute("selected", "false");
           });
         this.setAttribute("selected", "true");
       } else {
@@ -110,9 +115,10 @@ function displayResults(results) {
     .insertAdjacentHTML("afterbegin", resultsDOM);
 }
 
-function displayIngredientsList() {
+function displayIngredientsList(query) {
+  document.querySelector("#ingredients ul").innerHTML = "";
   let ingredientsDOM = "";
-  for (let ingredient of DataManager.getIngredients()) {
+  for (let ingredient of DataManager.getIngredients(query)) {
     ingredientsDOM += `<li>${ingredient}</li>`;
   }
   document
@@ -120,9 +126,10 @@ function displayIngredientsList() {
     .insertAdjacentHTML("afterbegin", ingredientsDOM);
 }
 
-function displayAppliancesList() {
+function displayAppliancesList(query) {
+  document.querySelector("#appliances ul").innerHTML = "";
   let appliancesDOM = "";
-  for (let appliance of DataManager.getAppliances()) {
+  for (let appliance of DataManager.getAppliances(query)) {
     appliancesDOM += `<li>${appliance}</li>`;
   }
   document
@@ -130,9 +137,10 @@ function displayAppliancesList() {
     .insertAdjacentHTML("afterbegin", appliancesDOM);
 }
 
-function displayUtensilsList() {
+function displayUtensilsList(query) {
+  document.querySelector("#utensils ul").innerHTML = "";
   let utensilsDOM = "";
-  for (let utensil of DataManager.getUtensils()) {
+  for (let utensil of DataManager.getUtensils(query)) {
     utensilsDOM += `<li>${utensil}</li>`;
   }
   document
@@ -144,5 +152,3 @@ init();
 
 //autre classe pour les filtres par tag
 //les filtres doivent être ceux des résultats de la recherche principale (ingrédients, ustensils...)
-//dataset plutôt que classe pour les tags
-// I/O et affichage de l'algorigramme

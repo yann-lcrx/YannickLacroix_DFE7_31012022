@@ -8,6 +8,7 @@ String.prototype.getFormattedDataId = function () {
   return this.toLowerCase()
     .replaceAll(" ", "-")
     .replaceAll("%", "")
+    .replaceAll("'", "")
     .replaceAll("(", "")
     .replaceAll(")", "");
 };
