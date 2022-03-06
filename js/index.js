@@ -33,11 +33,11 @@ function displayListItems(query) {
   displayIngredientsList(query);
   displayAppliancesList(query);
   displayUtensilsList(query);
-  setupListItemEvents();
+  setupListItemEvents(query);
   document.getElementById("selected-filters").innerHTML = "";
 }
 
-function setupListItemEvents() {
+function setupListItemEvents(query) {
   for (let listItem of document.querySelectorAll('[role="listbox"] li')) {
     listItem.addEventListener("click", function () {
       if (this.getAttribute("selected") !== "true") {
@@ -55,13 +55,15 @@ function setupListItemEvents() {
           .querySelector(
             `.chip[data-id=${this.innerText.getFormattedDataId()}] img`
           )
-          .addEventListener("click", () => {
+          .addEventListener("click", (event) => {
             document
               .querySelector(
                 `.chip[data-id=${this.innerText.getFormattedDataId()}]`
               )
               .remove();
             this.setAttribute("selected", "false");
+            setupFilters(query);
+            event.stopPropagation();
           });
         this.setAttribute("selected", "true");
       } else {
@@ -72,8 +74,32 @@ function setupListItemEvents() {
           .remove();
         this.setAttribute("selected", "false");
       }
+      setupFilters(query);
     });
   }
+}
+
+function setupFilters(query) {
+  let recipes = DataManager.getSearchResults(query);
+  for (let chip of document.getElementsByClassName("chip")) {
+    if (chip.classList.contains("chip-ingredients")) {
+      recipes = recipes.filter((recipe) => {
+        console.log(recipe);
+        return recipe.ingredients
+          .map((ingredient) => ingredient.ingredient)
+          .includes(chip.innerText);
+      });
+    }
+    if (chip.classList.contains("chip-appliances")) {
+      recipes = recipes.filter((recipe) => recipe.appliance === chip.innerText);
+    }
+    if (chip.classList.contains("chip-utensils")) {
+      recipes = recipes.filter((recipe) =>
+        recipe.ustensils.includes(chip.innerText)
+      );
+    }
+  }
+  displayResults(recipes);
 }
 
 function displayResults(results) {
