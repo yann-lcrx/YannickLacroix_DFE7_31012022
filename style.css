@@ -94,7 +94,9 @@ div[role="combobox"] {
 div[role="combobox"] + div[role="listbox"] {
   display: none;
   padding-top: 12px;
-  margin-right: -76px;
+  max-height: 300px;
+  overflow-y: scroll;
+  width: 100%;
 }
 
 div[role="combobox"][class="selected"] + div[role="listbox"] {
@@ -117,8 +119,7 @@ div[role="combobox"][class="selected"] + div[role="listbox"] {
 }
 
 #search-filters ul li {
-  margin-right: 76px;
-  width: 150px;
+  width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
