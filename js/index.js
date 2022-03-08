@@ -12,17 +12,17 @@ async function init() {
 
   for (let filterSelector of document.querySelectorAll('[role="combobox"]')) {
     filterSelector.addEventListener("click", function () {
-      if (this.classList.contains("selected")) {
-        this.classList.remove("selected");
-        this.childNodes[3].setAttribute(
-          "src",
-          "../assets/svg/expand_more_white.svg"
-        );
-      } else {
-        this.classList.add("selected");
+      if (this.getAttribute("selected") !== "true") {
+        this.setAttribute("selected", "true");
         this.childNodes[3].setAttribute(
           "src",
           "../assets/svg/expand_less_white.svg"
+        );
+      } else {
+        this.setAttribute("selected", "false");
+        this.childNodes[3].setAttribute(
+          "src",
+          "../assets/svg/expand_more_white.svg"
         );
       }
     });
