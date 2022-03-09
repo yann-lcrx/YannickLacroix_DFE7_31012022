@@ -10,7 +10,8 @@ String.prototype.getFormattedDataId = function () {
     .replaceAll("%", "")
     .replaceAll("'", "")
     .replaceAll("(", "")
-    .replaceAll(")", "");
+    .replaceAll(")", "")
+    .replaceAll(".", "");
 };
 
 export default String;

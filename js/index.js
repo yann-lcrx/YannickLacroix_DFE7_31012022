@@ -13,6 +13,14 @@ async function init() {
   for (let filterSelector of document.querySelectorAll('[role="combobox"]')) {
     filterSelector.addEventListener("click", function () {
       if (this.getAttribute("selected") !== "true") {
+        for (let filter of document.querySelectorAll('[role="combobox"]')) {
+          filter.setAttribute("selected", "false");
+          console.log(filter.childNodes);
+          filter.childNodes[3].setAttribute(
+            "src",
+            "../assets/svg/expand_more_white.svg"
+          );
+        }
         this.setAttribute("selected", "true");
         this.childNodes[3].setAttribute(
           "src",
@@ -84,7 +92,6 @@ function setupFilters(query) {
   for (let chip of document.getElementsByClassName("chip")) {
     if (chip.classList.contains("chip-ingredients")) {
       recipes = recipes.filter((recipe) => {
-        console.log(recipe);
         return recipe.ingredients
           .map((ingredient) => ingredient.ingredient)
           .includes(chip.innerText);
