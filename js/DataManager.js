@@ -3,6 +3,7 @@ import String from "./utils.js";
 /**
  * Fetches and serves data
  */
+
 export default class DataManager {
   static data = null;
 

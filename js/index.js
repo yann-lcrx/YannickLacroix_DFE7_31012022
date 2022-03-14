@@ -1,6 +1,9 @@
 import DataManager from "./DataManager.js";
 import String from "./utils.js";
 
+/**
+ * Initializes app
+ */
 async function init() {
   await DataManager.loadJson("../data/recipes.json");
   displayResults(DataManager.getRecipes());
@@ -11,6 +14,7 @@ async function init() {
   });
   displayListItems("");
 
+  //setup combobox expand/collapse
   for (let filterSelector of document.querySelectorAll('[role="combobox"]')) {
     filterSelector.addEventListener("click", function () {
       if (this.getAttribute("selected") !== "true") {
@@ -38,6 +42,12 @@ async function init() {
   }
 }
 
+/**
+ * display filter lists items, setup related events
+ *
+ * @param   {string}  query  search query
+ *
+ */
 function displayListItems(query) {
   let recipes = DataManager.getSearchResults(query);
   displayIngredientsList(recipes);
@@ -46,6 +56,12 @@ function displayListItems(query) {
   setupListItemEvents(query);
 }
 
+/**
+ * handle list item clicks, including insertion of chips for selected filters
+ *
+ * @param   {string}  query  search query
+ *
+ */
 function setupListItemEvents(query) {
   for (let listItem of document.querySelectorAll('[role="listbox"] li')) {
     listItem.addEventListener("click", function () {
@@ -88,6 +104,12 @@ function setupListItemEvents(query) {
   }
 }
 
+/**
+ * filter search items according to selected filters, display results and updates filters accordingly
+ *
+ * @param   {string}  query  search query
+ *
+ */
 function filterSearch(query) {
   let recipes = DataManager.getSearchResults(query);
   for (let chip of document.getElementsByClassName("chip")) {
@@ -114,6 +136,12 @@ function filterSearch(query) {
   setupListItemEvents(query);
 }
 
+/**
+ * cleans up previous search results, insert current ones into DOM
+ *
+ * @param   {Recipe[]}  results  filtered recipes
+ *
+ */
 function displayResults(results) {
   document.getElementById("results").innerHTML = "";
   let resultsDOM = "";
@@ -153,6 +181,12 @@ function displayResults(results) {
     .insertAdjacentHTML("afterbegin", resultsDOM);
 }
 
+/**
+ * clean up ingredients list, generate a new one with the ones present in search results, displays it
+ *
+ * @param   {Recipe[]}  recipes  filtered recipes
+ *
+ */
 function displayIngredientsList(recipes) {
   document.querySelector("#ingredients ul").innerHTML = "";
   let ingredientsDOM = "";
@@ -174,6 +208,12 @@ function displayIngredientsList(recipes) {
     .insertAdjacentHTML("afterbegin", ingredientsDOM);
 }
 
+/**
+ * clean up appliances list, generate a new one with the ones present in search results
+ *
+ * @param   {Recipe[]}  recipes  filtered recipes
+ *
+ */
 function displayAppliancesList(recipes) {
   document.querySelector("#appliances ul").innerHTML = "";
   let appliancesDOM = "";
@@ -195,6 +235,12 @@ function displayAppliancesList(recipes) {
     .insertAdjacentHTML("afterbegin", appliancesDOM);
 }
 
+/**
+ * clean up utensils list, generate a new one with the ones present in search results
+ *
+ * @param   {Recipe[]}  recipes  filtered recipes
+ *
+ */
 function displayUtensilsList(recipes) {
   document.querySelector("#utensils ul").innerHTML = "";
   let utensilsDOM = "";
