@@ -22,9 +22,9 @@ export default class DataManager {
     return this.data.recipes;
   }
 
-  static getIngredients(query) {
+  static getIngredients(recipes) {
     const ingredientList = [];
-    for (let recipe of this.getSearchResults(query)) {
+    for (let recipe of recipes) {
       for (let ingredient of recipe.ingredients)
         if (!ingredientList.includes(ingredient.ingredient)) {
           ingredientList.push(ingredient.ingredient);
@@ -33,9 +33,9 @@ export default class DataManager {
     return ingredientList;
   }
 
-  static getAppliances(query) {
+  static getAppliances(recipes) {
     const applianceList = [];
-    for (let recipe of this.getSearchResults(query)) {
+    for (let recipe of recipes) {
       if (!applianceList.includes(recipe.appliance)) {
         applianceList.push(recipe.appliance);
       }
@@ -43,9 +43,9 @@ export default class DataManager {
     return applianceList;
   }
 
-  static getUtensils(query) {
+  static getUtensils(recipes) {
     const utensilList = [];
-    for (let recipe of this.getSearchResults(query)) {
+    for (let recipe of recipes) {
       for (let utensil of recipe.ustensils)
         if (!utensilList.includes(utensil)) {
           utensilList.push(utensil);

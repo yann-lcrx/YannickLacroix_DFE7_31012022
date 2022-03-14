@@ -7,6 +7,7 @@ async function init() {
   document.querySelector("#search input").addEventListener("input", (event) => {
     displayResults(DataManager.getSearchResults(event.target.value));
     displayListItems(event.target.value);
+    document.getElementById("selected-filters").innerHTML = "";
   });
   displayListItems("");
 
@@ -15,7 +16,7 @@ async function init() {
       if (this.getAttribute("selected") !== "true") {
         for (let filter of document.querySelectorAll('[role="combobox"]')) {
           filter.setAttribute("selected", "false");
-          console.log(filter.childNodes);
+
           filter.childNodes[3].setAttribute(
             "src",
             "../assets/svg/expand_more_white.svg"
@@ -38,11 +39,11 @@ async function init() {
 }
 
 function displayListItems(query) {
-  displayIngredientsList(query);
-  displayAppliancesList(query);
-  displayUtensilsList(query);
+  let recipes = DataManager.getSearchResults(query);
+  displayIngredientsList(recipes);
+  displayAppliancesList(recipes);
+  displayUtensilsList(recipes);
   setupListItemEvents(query);
-  document.getElementById("selected-filters").innerHTML = "";
 }
 
 function setupListItemEvents(query) {
@@ -59,6 +60,7 @@ function setupListItemEvents(query) {
               this.innerText
             } <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" /></div>`
           );
+        // setup chips close button
         document
           .querySelector(
             `.chip[data-id=${this.innerText.getFormattedDataId()}] img`
@@ -70,10 +72,9 @@ function setupListItemEvents(query) {
               )
               .remove();
             this.setAttribute("selected", "false");
-            setupFilters(query);
+            filterSearch(query);
             event.stopPropagation();
           });
-        this.setAttribute("selected", "true");
       } else {
         document
           .querySelector(
@@ -82,12 +83,12 @@ function setupListItemEvents(query) {
           .remove();
         this.setAttribute("selected", "false");
       }
-      setupFilters(query);
+      filterSearch(query);
     });
   }
 }
 
-function setupFilters(query) {
+function filterSearch(query) {
   let recipes = DataManager.getSearchResults(query);
   for (let chip of document.getElementsByClassName("chip")) {
     if (chip.classList.contains("chip-ingredients")) {
@@ -107,6 +108,10 @@ function setupFilters(query) {
     }
   }
   displayResults(recipes);
+  displayIngredientsList(recipes);
+  displayAppliancesList(recipes);
+  displayUtensilsList(recipes);
+  setupListItemEvents(query);
 }
 
 function displayResults(results) {
@@ -148,33 +153,63 @@ function displayResults(results) {
     .insertAdjacentHTML("afterbegin", resultsDOM);
 }
 
-function displayIngredientsList(query) {
+function displayIngredientsList(recipes) {
   document.querySelector("#ingredients ul").innerHTML = "";
   let ingredientsDOM = "";
-  for (let ingredient of DataManager.getIngredients(query)) {
-    ingredientsDOM += `<li>${ingredient}</li>`;
+  for (let ingredient of DataManager.getIngredients(recipes)) {
+    //keep track of active ingredients filters if there are any
+    if (
+      document.getElementById("selected-filters").innerHTML &&
+      [...document.getElementsByClassName("chip-ingredients")]
+        .map((chip) => chip.innerText)
+        .includes(ingredient)
+    ) {
+      ingredientsDOM += `<li selected="true">${ingredient}</li>`;
+    } else {
+      ingredientsDOM += `<li>${ingredient}</li>`;
+    }
   }
   document
     .querySelector("#ingredients ul")
     .insertAdjacentHTML("afterbegin", ingredientsDOM);
 }
 
-function displayAppliancesList(query) {
+function displayAppliancesList(recipes) {
   document.querySelector("#appliances ul").innerHTML = "";
   let appliancesDOM = "";
-  for (let appliance of DataManager.getAppliances(query)) {
-    appliancesDOM += `<li>${appliance}</li>`;
+  for (let appliance of DataManager.getAppliances(recipes)) {
+    //keep track of active appliances filters if there are any
+    if (
+      document.getElementById("selected-filters").innerHTML &&
+      [...document.getElementsByClassName("chip-appliances")]
+        .map((chip) => chip.innerText)
+        .includes(appliance)
+    ) {
+      appliancesDOM += `<li selected="true">${appliance}</li>`;
+    } else {
+      appliancesDOM += `<li>${appliance}</li>`;
+    }
   }
   document
     .querySelector("#appliances ul")
     .insertAdjacentHTML("afterbegin", appliancesDOM);
 }
 
-function displayUtensilsList(query) {
+function displayUtensilsList(recipes) {
   document.querySelector("#utensils ul").innerHTML = "";
   let utensilsDOM = "";
-  for (let utensil of DataManager.getUtensils(query)) {
-    utensilsDOM += `<li>${utensil}</li>`;
+  for (let utensil of DataManager.getUtensils(recipes)) {
+    //keep track of active appliances filters if there are any
+    if (
+      document.getElementById("selected-filters").innerHTML &&
+      [...document.getElementsByClassName("chip-utensils")]
+        .map((chip) => chip.innerText)
+        .includes(utensil)
+    ) {
+      utensilsDOM += `<li selected="true">${utensil}</li>`;
+    } else {
+      utensilsDOM += `<li>${utensil}</li>`;
+    }
   }
   document
     .querySelector("#utensils ul")
@@ -182,6 +217,3 @@ function displayUtensilsList(query) {
 }
 
 init();
-
-//autre classe pour les filtres par tag
-//les filtres doivent être ceux des résultats de la recherche principale (ingrédients, ustensils...)
