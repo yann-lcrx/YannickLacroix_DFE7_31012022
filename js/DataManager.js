@@ -67,7 +67,7 @@ export default class DataManager {
         if (
           recipe.name.getFormattedSearchQuery().includes(formattedString) ||
           recipe.description.includes(formattedString) ||
-          ingredientsList.includes(formattedString)
+          ingredientsList.join("").includes(formattedString)
         ) {
           matchedRecipes.push(recipe);
         }
