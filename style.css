@@ -1,6 +1,11 @@
 @font-face {
   font-family: "Lato";
-  src: url("/assets/Lato2OFL/Lato-Regular.ttf");
+  src: url("/assets/font/Lato-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/assets/font/Roboto-Regular.ttf");
 }
 
 p {
@@ -12,9 +17,14 @@ input {
   flex-grow: 1;
 }
 
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+
 body {
   padding: 32px 0;
-  font-family: "Lato";
+  font-family: "Lato", "Roboto", Arial, Helvetica, sans-serif;
   max-width: 1240px;
   width: calc(100% - 64px);
   margin: auto;
@@ -112,8 +122,6 @@ div[role="combobox"][selected="true"] + div[role="listbox"] {
 }
 
 #search-filters ul {
-  padding: 0;
-  margin: 0;
   list-style-type: none;
   cursor: pointer;
   display: flex;
@@ -167,7 +175,7 @@ div[role="combobox"][selected="true"] + div[role="listbox"] {
 article {
   flex: 1;
   max-width: 380px;
-  max-height: 364px;
+  height: 364px;
 }
 
 article,
@@ -180,10 +188,10 @@ img {
   gap: 20px;
   background-color: #e7e7e7;
   overflow: hidden;
+  flex-grow: 1;
 }
 
 #results ul {
-  padding: 0px;
   font-size: 12px;
   flex: 1;
 }
@@ -199,7 +207,6 @@ li {
 article header {
   font-size: 18px;
   white-space: nowrap;
-  gap: 6px;
 }
 
 article header p:first-child {
@@ -223,10 +230,23 @@ article header p:first-child {
 article header {
   display: flex;
   justify-content: space-between;
+  gap: 8px;
 }
 
 .card-body > p {
   flex: 1;
+  font-size: 12px;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
+.card-body li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-body > * {
+  max-width: 171px;
 }
 
 article,

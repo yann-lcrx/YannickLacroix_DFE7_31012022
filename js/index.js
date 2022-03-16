@@ -42,12 +42,6 @@ async function init() {
   }
 }
 
-/**
- * display filter lists items, setup related events
- *
- * @param   {string}  query  search query
- *
- */
 function displayListItems(query) {
   let recipes = DataManager.getSearchResults(query);
   displayIngredientsList(recipes);
@@ -169,7 +163,11 @@ function displayResults(results) {
                 .join("")}
             </ul>
             <p>
-              ${result.description}
+              ${
+                result.description.length > 182
+                  ? `${result.description.slice(0, 182)} ...`
+                  : result.description
+              }
             </p>
           </div>
         </div>
