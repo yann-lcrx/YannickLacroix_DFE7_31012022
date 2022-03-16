@@ -66,8 +66,9 @@ export default class DataManager {
             .includes(formattedString) ||
           recipe.ingredients
             .map((ingredient) =>
-              Object.values(ingredient.ingredient.getFormattedSearchQuery())
+              ingredient.ingredient.getFormattedSearchQuery()
             )
+            .join("")
             .includes(formattedString)
         );
       });
