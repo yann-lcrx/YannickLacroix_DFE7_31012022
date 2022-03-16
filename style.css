@@ -39,6 +39,10 @@ header#header img {
   margin-bottom: 17px;
 }
 
+header#header a {
+  display: inline-block;
+}
+
 #search,
 #searchbar {
   margin-bottom: 25px;
@@ -111,26 +115,21 @@ div[role="combobox"] + div[role="listbox"] {
   max-height: 300px;
   overflow-y: scroll;
   width: 100%;
+  flex-flow: row wrap;
+  gap: 10px;
+  max-width: 700px;
 }
 
-div[role="combobox"][selected="true"] + div[role="listbox"] {
-  display: block;
+div[role="combobox"][aria-expanded="true"] + div[role="listbox"] {
+  display: flex;
 }
 
 #search-filters {
   font-size: 18px;
 }
 
-#search-filters ul {
-  list-style-type: none;
+div[role="option"] {
   cursor: pointer;
-  display: flex;
-  flex-flow: row wrap;
-  gap: 10px;
-  max-width: 700px;
-}
-
-#search-filters ul li {
   width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -209,9 +208,12 @@ article header {
   white-space: nowrap;
 }
 
-article header p:first-child {
+article header h2 {
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 18px;
+  margin: 0px;
+  font-weight: 400;
 }
 
 .placeholder-img {

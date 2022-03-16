@@ -31,7 +31,12 @@
         <div id="selected-filters"></div>
         <div id="search-filters">
           <div id="ingredients-section" class="search-filter">
-            <div id="search-ingredients" role="combobox">
+            <div
+              aria-expanded="false"
+              id="search-ingredients"
+              role="combobox"
+              aria-controls="ingredients"
+            >
               <input
                 type="search"
                 name="ingredients"
@@ -43,12 +48,20 @@
                 alt="afficher les filtres"
               />
             </div>
-            <div role="listbox" id="ingredients">
-              <ul></ul>
-            </div>
+            <div
+              role="listbox"
+              id="ingredients"
+              aria-label="ingrédients"
+              tabindex="0"
+            ></div>
           </div>
           <div id="appliances-section" class="search-filter">
-            <div id="search-appliances" role="combobox">
+            <div
+              aria-expanded="false"
+              id="search-appliances"
+              role="combobox"
+              aria-controls="appliances"
+            >
               <input
                 type="search"
                 name="appliances"
@@ -60,12 +73,20 @@
                 alt="afficher les filtres"
               />
             </div>
-            <div role="listbox" id="appliances">
-              <ul></ul>
-            </div>
+            <div
+              role="listbox"
+              id="appliances"
+              aria-label="appareils"
+              tabindex="0"
+            ></div>
           </div>
           <div id="utensils-section" class="search-filter">
-            <div id="search-utensils" role="combobox">
+            <div
+              aria-expanded="false"
+              id="search-utensils"
+              role="combobox"
+              aria-controls="utensils"
+            >
               <input
                 type="search"
                 name="utensils"
@@ -77,9 +98,12 @@
                 alt="afficher les filtres"
               />
             </div>
-            <div role="listbox" id="utensils">
-              <ul></ul>
-            </div>
+            <div
+              role="listbox"
+              id="utensils"
+              aria-label="ustensils"
+              tabindex="0"
+            ></div>
           </div>
         </div>
       </div>

@@ -17,22 +17,22 @@ async function init() {
   //setup combobox expand/collapse
   for (let filterSelector of document.querySelectorAll('[role="combobox"]')) {
     filterSelector.addEventListener("click", function () {
-      if (this.getAttribute("selected") !== "true") {
+      if (this.getAttribute("aria-expanded") !== "true") {
         for (let filter of document.querySelectorAll('[role="combobox"]')) {
-          filter.setAttribute("selected", "false");
+          filter.setAttribute("aria-expanded", "false");
 
           filter.childNodes[3].setAttribute(
             "src",
             "../assets/svg/expand_more_white.svg"
           );
         }
-        this.setAttribute("selected", "true");
+        this.setAttribute("aria-expanded", "true");
         this.childNodes[3].setAttribute(
           "src",
           "../assets/svg/expand_less_white.svg"
         );
       } else {
-        this.setAttribute("selected", "false");
+        this.setAttribute("aria-expanded", "false");
         this.childNodes[3].setAttribute(
           "src",
           "../assets/svg/expand_more_white.svg"
@@ -57,15 +57,15 @@ function displayListItems(query) {
  *
  */
 function setupListItemEvents(query) {
-  for (let listItem of document.querySelectorAll('[role="listbox"] li')) {
+  for (let listItem of document.querySelectorAll('[role="option"]')) {
     listItem.addEventListener("click", function () {
-      if (this.getAttribute("selected") !== "true") {
+      if (this.getAttribute("aria-selected") !== "true") {
         document
           .getElementById("selected-filters")
           .insertAdjacentHTML(
             "beforeend",
             `<div class="chip chip-${
-              this.parentElement.parentElement.id
+              this.parentElement.id
             }" data-id=${this.innerText.getFormattedDataId()}>${
               this.innerText
             } <img src="/assets/svg/cancel_white.svg" alt="supprimer le filtre" /></div>`
@@ -81,7 +81,7 @@ function setupListItemEvents(query) {
                 `.chip[data-id=${this.innerText.getFormattedDataId()}]`
               )
               .remove();
-            this.setAttribute("selected", "false");
+            this.setAttribute("aria-selected", "false");
             filterSearch(query);
             event.stopPropagation();
           });
@@ -91,7 +91,7 @@ function setupListItemEvents(query) {
             `.chip[data-id=${this.innerText.getFormattedDataId()}]`
           )
           .remove();
-        this.setAttribute("selected", "false");
+        this.setAttribute("aria-selected", "false");
       }
       filterSearch(query);
     });
@@ -145,7 +145,7 @@ function displayResults(results) {
         <div class="placeholder-img"></div>
         <div class="card-info">
           <header>
-            <p>${result.name}</p>
+            <h2>${result.name}</h2>
             <p class="duration-text">${result.time} min</p>
           </header>
           <div class="card-body">
@@ -186,7 +186,7 @@ function displayResults(results) {
  *
  */
 function displayIngredientsList(recipes) {
-  document.querySelector("#ingredients ul").innerHTML = "";
+  document.getElementById("ingredients").innerHTML = "";
   let ingredientsDOM = "";
   for (let ingredient of DataManager.getIngredients(recipes)) {
     //keep track of active ingredients filters if there are any
@@ -196,13 +196,13 @@ function displayIngredientsList(recipes) {
         .map((chip) => chip.innerText)
         .includes(ingredient)
     ) {
-      ingredientsDOM += `<li selected="true">${ingredient}</li>`;
+      ingredientsDOM += `<div role="option" aria-selected="true">${ingredient}</div>`;
     } else {
-      ingredientsDOM += `<li>${ingredient}</li>`;
+      ingredientsDOM += `<div role="option">${ingredient}</div>`;
     }
   }
   document
-    .querySelector("#ingredients ul")
+    .getElementById("ingredients")
     .insertAdjacentHTML("afterbegin", ingredientsDOM);
 }
 
@@ -213,7 +213,7 @@ function displayIngredientsList(recipes) {
  *
  */
 function displayAppliancesList(recipes) {
-  document.querySelector("#appliances ul").innerHTML = "";
+  document.getElementById("appliances").innerHTML = "";
   let appliancesDOM = "";
   for (let appliance of DataManager.getAppliances(recipes)) {
     //keep track of active appliances filters if there are any
@@ -223,13 +223,13 @@ function displayAppliancesList(recipes) {
         .map((chip) => chip.innerText)
         .includes(appliance)
     ) {
-      appliancesDOM += `<li selected="true">${appliance}</li>`;
+      appliancesDOM += `<div role="option" aria-selected="true">${appliance}</div>`;
     } else {
-      appliancesDOM += `<li>${appliance}</li>`;
+      appliancesDOM += `<div role="option">${appliance}</div>`;
     }
   }
   document
-    .querySelector("#appliances ul")
+    .getElementById("appliances")
     .insertAdjacentHTML("afterbegin", appliancesDOM);
 }
 
@@ -240,7 +240,7 @@ function displayAppliancesList(recipes) {
  *
  */
 function displayUtensilsList(recipes) {
-  document.querySelector("#utensils ul").innerHTML = "";
+  document.getElementById("utensils").innerHTML = "";
   let utensilsDOM = "";
   for (let utensil of DataManager.getUtensils(recipes)) {
     //keep track of active appliances filters if there are any
@@ -250,13 +250,13 @@ function displayUtensilsList(recipes) {
         .map((chip) => chip.innerText)
         .includes(utensil)
     ) {
-      utensilsDOM += `<li selected="true">${utensil}</li>`;
+      utensilsDOM += `<div role="option" aria-selected="true">${utensil}</div>`;
     } else {
-      utensilsDOM += `<li>${utensil}</li>`;
+      utensilsDOM += `<div role="option">${utensil}</div>`;
     }
   }
   document
-    .querySelector("#utensils ul")
+    .getElementById("utensils")
     .insertAdjacentHTML("afterbegin", utensilsDOM);
 }
 
