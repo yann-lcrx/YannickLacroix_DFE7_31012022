@@ -57,7 +57,9 @@ export default class DataManager {
 
   static getSearchResults(query) {
     if (query.length > 2) {
-      const formattedString = query.getFormattedSearchQuery();
+      const formattedString = query
+        .getFormattedSearchQuery()
+        .replaceAll(",", "");
       return [...this.getRecipes()].filter((recipe) => {
         return (
           recipe.name.getFormattedSearchQuery().includes(formattedString) ||
@@ -68,7 +70,7 @@ export default class DataManager {
             .map((ingredient) =>
               ingredient.ingredient.getFormattedSearchQuery()
             )
-            .join("")
+            .join()
             .includes(formattedString)
         );
       });
