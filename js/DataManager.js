@@ -57,17 +57,21 @@ export default class DataManager {
 
   static getSearchResults(query) {
     if (query.length > 2) {
-      const formattedString = query.getFormattedSearchQuery();
+      const formattedString = query
+        .getFormattedSearchQuery()
+        .replaceAll(",", "");
       const matchedRecipes = [];
       for (let recipe of this.getRecipes()) {
-        let ingredientsList = [];
+        let ingredientsList = "";
         for (let ingredient of recipe.ingredients) {
-          ingredientsList.push(ingredient.ingredient.getFormattedSearchQuery());
+          ingredientsList += `${ingredient.ingredient}, `;
         }
         if (
           recipe.name.getFormattedSearchQuery().includes(formattedString) ||
-          recipe.description.includes(formattedString) ||
-          ingredientsList.join("").includes(formattedString)
+          recipe.description
+            .getFormattedSearchQuery()
+            .includes(formattedString) ||
+          ingredientsList.getFormattedSearchQuery().includes(formattedString)
         ) {
           matchedRecipes.push(recipe);
         }
