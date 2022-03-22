@@ -321,9 +321,33 @@ function displayAppliancesList(recipes) {
  */
 function displayUtensilsList(recipes) {
   document.getElementById("utensils").innerHTML = "";
+
+  const selectedUtensilFilters =
+    document.getElementsByClassName("chip-utensils");
+  let filteredRecipes = [];
+  if (selectedUtensilFilters.length) {
+    //only return the recipes containing all selected utensils
+    for (let recipe of recipes) {
+      for (let filter of selectedUtensilFilters) {
+        if (!recipe.ustensils.includes(filter.innerText)) {
+          break;
+        } else filteredRecipes.push(recipe);
+      }
+    }
+  } else {
+    filteredRecipes = [...recipes];
+  }
+
   let utensilsDOM = "";
-  for (let utensil of DataManager.getUtensils(recipes)) {
-    //keep track of active appliances filters if there are any
+
+  const filterQuery = document.getElementById("search-utensils-filter").value;
+  for (let utensil of DataManager.getUtensils(filteredRecipes).filter(
+    (utensil) =>
+      utensil
+        .getFormattedSearchQuery()
+        .includes(filterQuery ? filterQuery.getFormattedSearchQuery() : "")
+  )) {
+    //keep track of active utensils filters if there are any
     if (
       document.getElementById("selected-filters").innerHTML &&
       [...document.getElementsByClassName("chip-utensils")]
