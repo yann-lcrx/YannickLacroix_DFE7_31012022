@@ -271,8 +271,31 @@ function displayIngredientsList(recipes) {
  */
 function displayAppliancesList(recipes) {
   document.getElementById("appliances").innerHTML = "";
+
+  const selectedApplianceFilters =
+    document.getElementsByClassName("chip-appliances");
+  let filteredRecipes = [];
+  if (selectedApplianceFilters.length) {
+    //only return the recipes containing all selected appliances
+    for (let recipe of recipes) {
+      for (let filter of selectedApplianceFilters) {
+        if (!recipe.appliance.includes(filter.innerText)) {
+          break;
+        } else filteredRecipes.push(recipe);
+      }
+    }
+  } else {
+    filteredRecipes = [...recipes];
+  }
+
   let appliancesDOM = "";
-  for (let appliance of DataManager.getAppliances(recipes)) {
+  const filterQuery = document.getElementById("search-appliances-filter").value;
+  for (let appliance of DataManager.getAppliances(filteredRecipes).filter(
+    (appliance) =>
+      appliance
+        .getFormattedSearchQuery()
+        .includes(filterQuery ? filterQuery.getFormattedSearchQuery() : "")
+  )) {
     //keep track of active appliances filters if there are any
     if (
       document.getElementById("selected-filters").innerHTML &&
