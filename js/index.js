@@ -7,6 +7,7 @@ import String from "./utils.js";
 async function init() {
   await DataManager.loadJson("../data/recipes.json");
   displayResults(DataManager.getRecipes());
+
   document.querySelector("#search input").addEventListener("input", (event) => {
     displayResults(DataManager.getSearchResults(event.target.value));
     displayListItems(event.target.value);
@@ -40,6 +41,33 @@ async function init() {
       }
     });
   }
+
+  document
+    .getElementById("search-ingredients-filter")
+    .addEventListener("input", function () {
+      const searchQuery = document.querySelector("#search input").value;
+      const recipes = DataManager.getSearchResults(searchQuery);
+      displayIngredientsList(recipes);
+      setupListItemEvents(searchQuery);
+    });
+
+  document
+    .getElementById("search-appliances-filter")
+    .addEventListener("input", function () {
+      const searchQuery = document.querySelector("#search input").value;
+      const recipes = DataManager.getSearchResults(searchQuery);
+      displayAppliancesList(recipes);
+      setupListItemEvents(searchQuery);
+    });
+
+  document
+    .getElementById("search-utensils-filter")
+    .addEventListener("input", function () {
+      const searchQuery = document.querySelector("#search input").value;
+      const recipes = DataManager.getSearchResults(searchQuery);
+      displayUtensilsList(recipes);
+      setupListItemEvents(searchQuery);
+    });
 }
 
 function displayListItems(query) {
@@ -187,8 +215,37 @@ function displayResults(results) {
  */
 function displayIngredientsList(recipes) {
   document.getElementById("ingredients").innerHTML = "";
+
+  const selectedIngredientFilters =
+    document.getElementsByClassName("chip-ingredients");
+  let filteredRecipes = [];
+  if (selectedIngredientFilters.length) {
+    //only return the recipes containing all selected ingredients
+    for (let recipe of recipes) {
+      for (let filter of selectedIngredientFilters) {
+        if (
+          !recipe.ingredients
+            .map((ingredient) => ingredient.ingredient)
+            .includes(filter.innerText)
+        ) {
+          break;
+        } else filteredRecipes.push(recipe);
+      }
+    }
+  } else {
+    filteredRecipes = [...recipes];
+  }
+
   let ingredientsDOM = "";
-  for (let ingredient of DataManager.getIngredients(recipes)) {
+  const filterQuery = document.getElementById(
+    "search-ingredients-filter"
+  ).value;
+  for (let ingredient of DataManager.getIngredients(filteredRecipes).filter(
+    (ingredient) =>
+      ingredient
+        .getFormattedSearchQuery()
+        .includes(filterQuery ? filterQuery.getFormattedSearchQuery() : "")
+  )) {
     //keep track of active ingredients filters if there are any
     if (
       document.getElementById("selected-filters").innerHTML &&
