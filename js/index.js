@@ -18,6 +18,7 @@ async function init() {
   //setup combobox expand/collapse
   for (let filterSelector of document.querySelectorAll('[role="combobox"]')) {
     filterSelector.addEventListener("click", function () {
+      console.log(this.childNodes);
       if (this.getAttribute("aria-expanded") !== "true") {
         for (let filter of document.querySelectorAll('[role="combobox"]')) {
           filter.setAttribute("aria-expanded", "false");
@@ -32,12 +33,8 @@ async function init() {
           "src",
           "../assets/svg/expand_less_white.svg"
         );
-      } else {
-        this.setAttribute("aria-expanded", "false");
-        this.childNodes[3].setAttribute(
-          "src",
-          "../assets/svg/expand_more_white.svg"
-        );
+      } else if (!this.childNodes[1].value) {
+        collapseFilter(this);
       }
     });
   }
@@ -69,6 +66,14 @@ async function init() {
       setupListItemEvents(searchQuery);
     });
 }
+
+const collapseFilter = (filter) => {
+  filter.setAttribute("aria-expanded", "false");
+  filter.childNodes[3].setAttribute(
+    "src",
+    "../assets/svg/expand_more_white.svg"
+  );
+};
 
 function displayListItems(query) {
   let recipes = DataManager.getSearchResults(query);
